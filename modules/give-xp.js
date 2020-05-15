@@ -47,8 +47,19 @@ export class GiveXP {
         if (defeatedEnemies.length === 0 || playerCombatants.length === 0) {
             return;
         }
+                var multipliers = [0.5,1,1.5,2,2,2,2,2.5,2.5,2.5,2.5,3,3,3,3,4];
+        var nbrEnemies = defeatedEnemies.length;
+        if( playerCombatants.length<3){nbrEnemies+=1;}
+        else if ( playerCombatants.length>=6)
+        {
+            nbrEnemies-=1;
+        }
+        var mult = nbrEnemies>=15? 4:multipliers[nbrEnemies];
+       
 
         defeatedEnemies.forEach(enemy => experience += enemy.actor.data.data.details.xp.value);
+        experience*=mult;
+        //defeatedEnemies.forEach(enemy => experience += enemy.actor.data.data.details.xp.value);
         const dividedExperience = Math.floor(experience / playerCombatants.length);
 
         let experienceMessage = "<b>Experience Awarded!</b> (" + experience + "xp)<p><b>" + dividedExperience + "xp </b> added to:</br>";
